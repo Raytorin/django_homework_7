@@ -16,7 +16,6 @@ class AdvertisementViewSet(ModelViewSet):
     serializer_class = AdvertisementSerializer
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['creator', 'status']
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     filterset_class = AdvertisementFilter
 
@@ -26,6 +25,7 @@ class AdvertisementViewSet(ModelViewSet):
     def get_permissions(self):
         """Получение прав для действий."""
 
-        if self.action in ["create", "update", "partial_update"]:
+        if self.action in ["create", "update", "partial_update", "destroy"]:
+            print('auth')
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return []

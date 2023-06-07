@@ -43,6 +43,6 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         limit = 10
         open_ads_limit = Advertisement.objects.filter(creator=creator, status=open_status).count()
         status_data = data.get('status', '')
-        if (request_method == 'POST' and status_data == open_status) and open_ads_limit >= limit:
+        if (request_method == 'POST' or status_data == open_status) and open_ads_limit >= limit:
             raise ValidationError(f'You cannot have more than {limit} open ads')
         return data
